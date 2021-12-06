@@ -463,7 +463,7 @@ install_additional_plugins()
 node_is_up()
 {
   exec 17>&1
-  local response=$(curl -XGET -u "elastic:$1" -H 'Content-Type: application/json' --write-out '\n%{http_code}\n' \
+  local response=$(curl -u "elastic:$1" -H 'Content-Type: application/json' --write-out '\n%{http_code}\n' \
     "$PROTOCOL://localhost:9200/_cluster/health?wait_for_status=green&timeout=30s&filter_path=status" $CURL_SWITCH | tee /dev/fd/17) 
   local curl_error_code=$?
   local http_code=$(echo "$response" | tail -n 1)
@@ -561,7 +561,7 @@ wait_for_green_security_index()
   until [ "$retries" -ge 12 ]
   do
     exec 17>&1
-    local response=$(curl -XGET -u "elastic:$USER_ADMIN_PWD" -H 'Content-Type: application/json' --write-out '\n%{http_code}\n' \
+    local response=$(curl -u "elastic:$USER_ADMIN_PWD" -H 'Content-Type: application/json' --write-out '\n%{http_code}\n' \
       "$PROTOCOL://localhost:9200/_cluster/health/.security?wait_for_status=green&timeout=30s&filter_path=status" $CURL_SWITCH | tee /dev/fd/17) 
     local curl_error_code=$?
     local http_code=$(echo "$response" | tail -n 1)
