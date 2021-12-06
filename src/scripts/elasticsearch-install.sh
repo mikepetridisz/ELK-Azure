@@ -519,7 +519,9 @@ wait_for_started()
     if [[ $? != 0 ]]; then
       node_is_up "$USER_ADMIN_PWD"
       if [[ $? != 0 ]]; then
-        sleep 5
+        log "[systemctl restart elasticsearch] sudo systemctl restart elasticsearch, retry ${i}/$TOTAL_RETRIES"
+        sudo systemctl restart elasticsearch
+        sleep 10
         log "[wait_for_started] seeing if node is up after sleeping 5 seconds, retry ${i}/$TOTAL_RETRIES"
       else
         log "[wait_for_started] node is up!"
