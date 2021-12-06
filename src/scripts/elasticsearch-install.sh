@@ -521,6 +521,8 @@ wait_for_started()
       if [[ $? != 0 ]]; then
         log "[systemctl restart elasticsearch] sudo systemctl restart elasticsearch, retry ${i}/$TOTAL_RETRIES"
         sudo systemctl restart elasticsearch
+        log "[ sudo service elasticsearch status]  sudo service elasticsearch status, retry ${i}/$TOTAL_RETRIES"
+        sudo service elasticsearch status
         sleep 10
         log "[wait_for_started] seeing if node is up after sleeping 5 seconds, retry ${i}/$TOTAL_RETRIES"
       else
